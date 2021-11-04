@@ -1,0 +1,41 @@
+<body>
+    <head>
+        <title>Webapp</title>
+    </head>
+    <body>
+        <h1>Random number generator</h1>
+            <select name="numbers" id="numbers" onchange="APIfunction()">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+        </select>
+        <br><br>
+    <h2>Random generated values:</h2>
+    <p id="result"></p>
+
+    <script type='text/javascript'>
+    function APIfunction(){
+        var num = document.getElementById("numbers").value.toString();
+        var api = 'https://g5m8zxfzt4.execute-api.us-east-2.amazonaws.com/default/myLambdaRandomNumbers?n='
+        const api_url = api + num;
+        function call_api_end_point(){
+            fetch(api_url)
+            .then((resp) => resp.json())
+            .then(function(data) {
+                document.getElementById("result").innerHTML = data.join(",")
+            })
+        }
+
+        call_api_end_point()
+   }
+    </script>
+</body>
+</html>
+
