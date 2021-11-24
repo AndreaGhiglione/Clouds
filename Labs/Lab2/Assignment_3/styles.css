@@ -1,0 +1,93 @@
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+    margin-top: 35px;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
+	font-family: sans-serif;
+	font-weight: 100;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+table {
+	width: 800px;
+    margin-top: 40px;
+    text-align:center; 
+    margin-left:auto; 
+    margin-right:auto;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 20px;
+    padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+form{
+    text-align: center;
+    color: white
+}
+
+button#btnIns:hover{
+    background-color: rgba(9, 255, 29, 0.411);
+}
+
+button#btnIns{
+    background-color:#4CAF50;
+    border:none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+  }
+
+button#btnEdit:hover{
+    background-color: rgba(255, 189, 9, 0.541);
+}
+
+button#btnEdit{
+    background-color:rgb(221, 162, 52);
+    border:none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+  }
+
+button#btnDel:hover{
+    background-color: rgba(255, 9, 9, 0.493);
+}
+
+button#btnDel{
+    background-color: #ca1111;
+    border:none;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+  }

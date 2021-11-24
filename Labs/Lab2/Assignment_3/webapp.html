@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Football teams</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="callAPI_GET();">
+    <h1>Football Teams</h1>
+    <table id="tableFootball"></table>
+    <br><br>
+    <form id="formAdd" style="visibility: visible;">
+        <label>id :</label>
+        <input type="text" id="id">
+        <label>Name :</label>
+        <input type="text" id="Name">
+        <label>Year :</label>
+        <input type="text" id="Year">
+        <label>Country :</label>
+        <input type="text" id="Country">
+        <label>Trophies :</label>
+        <input type="text" id="Trophies">
+        <button type="button" id="btnIns" onclick="callAPI_PUT(document.getElementById('id').value,document.getElementById('Name').value, document.getElementById('Year').value,
+        document.getElementById('Country').value, document.getElementById('Trophies').value)">Insert</button>
+    </form>
+    <form id="formEdit" style="visibility: hidden;">
+        <p id="idEdit" value=""></p>
+        <label>Name :</label>
+        <input type="text" id="NameEdit" value="">
+        <label>Year :</label>
+        <input type="text" id="YearEdit" value="">
+        <label>Country :</label>
+        <input type="text" id="CountryEdit" value="">
+        <label>Trophies :</label>
+        <input type="text" id="TrophiesEdit" value="">
+        <button type="button" id="btnIns" onclick="callAPI_PUT(document.getElementById('idEdit').value, document.getElementById('NameEdit').value,
+        document.getElementById('YearEdit').value, document.getElementById('CountryEdit').value, document.getElementById('TrophiesEdit').value)">Edit</button>
+    </form>
+
+</body>
+
+<script>
+
+    var callAPI_GET = ()=>{
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+        };
+        fetch("https://gysmyim6t5.execute-api.us-east-2.amazonaws.com/football_teams", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            res=JSON.parse(result);
+            var table = document.getElementById('tableFootball');
+            var arrHead = new Array();
+            arrHead = ['id', 'Name', 'Year', 'Country', 'Trophies'];
+            var arrValue = new Array();
+            for(i=0; i<res.Count; i++){
+                data = res.Items[i];
+                toPush = [data.id, data.name, data.year, data.nation, data.trophies];
+                arrValue.push(toPush);
+            }
+            var tr = table.insertRow(-1);
+
+            for (var h = 0; h < arrHead.length; h++) {
+                var th = document.createElement('th');
+                th.innerHTML = arrHead[h];
+                tr.appendChild(th);
+            }
+
+            for (var c = 0; c <= arrValue.length - 1; c++) {
+                tr = table.insertRow(-1);
+
+                for (var j = 0; j < arrHead.length +2; j++) {
+                    var td = document.createElement('td');
+                    td = tr.insertCell(-1);
+                    if (j == arrHead.length)
+                        td.innerHTML = "<button id='btnEdit'onclick='editRec(this)'>Edit</button>"
+                    else
+                        if (j == arrHead.length + 1)
+                            td.innerHTML = "<button id='btnDel' onclick='callAPI_DELETE(this)'>Delete</button>";
+                    else
+                        td.innerHTML = arrValue[c][j];
+                }
+            }
+        }) 
+        .catch(error => console.log('error', error));
+    }
+
+    var callAPI_PUT = (id,Name,Year,Country,Trophies)=>{
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var raw = JSON.stringify({"id":id, "name":Name, "year":Year, "nation":Country, "trophies":Trophies});
+        var requestOptions = {
+            method: 'PUT',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        fetch("https://gysmyim6t5.execute-api.us-east-2.amazonaws.com/football_teams", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(JSON.parse(result)))
+        .catch(error => console.log('error', error))
+        .then(() => {window.location.reload();});
+    }
+
+    function editRec(element){
+        document.getElementById("formAdd").style.visibility="hidden";
+        document.getElementById("formEdit").style.visibility="visible";
+        rowIndex = element.parentNode.parentNode.rowIndex;
+        id = document.getElementsByTagName('table')[0].rows[rowIndex].cells[0].innerText;
+        document.getElementById("idEdit").value=id;
+        name = document.getElementsByTagName('table')[0].rows[rowIndex].cells[1].innerText;
+        document.getElementById("NameEdit").value = name;
+        year = document.getElementsByTagName('table')[0].rows[rowIndex].cells[2].innerText;
+        document.getElementById("YearEdit").value = year;
+        country = document.getElementsByTagName('table')[0].rows[rowIndex].cells[3].innerText;
+        document.getElementById("CountryEdit").value = country;
+        trophies = document.getElementsByTagName('table')[0].rows[rowIndex].cells[4].innerText;
+        document.getElementById("TrophiesEdit").value = trophies;
+    }
+
+    function callAPI_DELETE(element){
+        rowIndex = element.parentNode.parentNode.rowIndex;
+        id = document.getElementsByTagName('table')[0].rows[rowIndex].cells[0].innerText
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+            method: 'DELETE',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        fetch("https://gysmyim6t5.execute-api.us-east-2.amazonaws.com/football_teams/" + id, requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(JSON.parse(result)))
+        .catch(error => console.log('error', error))
+        .then(() => {window.location.reload();});
+    }
+
+</script>
+</html>
