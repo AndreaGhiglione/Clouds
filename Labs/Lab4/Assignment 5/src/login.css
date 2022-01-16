@@ -1,0 +1,32 @@
+h1 {
+    margin-top: 1em;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+}
+
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+
+button {
+    background-color: #007504; /* Green */
+    border: none;
+    border-radius: 5%; 
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+    cursor: pointer;
+  }
+
+button:hover {
+    background-color: rgb(0, 85, 21);
+}

@@ -1,0 +1,18 @@
+{
+  "movies-list" : [ {
+    "genre" : "Biography",
+    "id" : 1,
+    "title" : "127 Hours",
+    "year" : 2010
+  }, {
+    "genre" : "Documentary",
+    "id" : 2,
+    "title" : "8: The Mormon Proposition",
+    "year" : 2010
+  }, {
+    "genre" : "Crime",
+    "id" : 2043,
+    "title" : "Destroyer",
+    "year" : 2018
+  } ]
+}
