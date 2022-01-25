@@ -59,6 +59,7 @@ td, th {
 .heart{
     margin:auto;
     display:block;
+    cursor: pointer;
   }
 
 #inputSearchBar {
