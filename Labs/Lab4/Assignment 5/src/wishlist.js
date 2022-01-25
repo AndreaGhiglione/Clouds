@@ -1,6 +1,6 @@
 import {auth, db, dbFirestore} from "./firebase.js";
-import {ref, onValue, set, get, child} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
-import {doc, updateDoc, deleteField, getDoc, setDoc, collection, addDoc, query, where} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js";
+import {ref, set} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
+import {doc, updateDoc, deleteField, getDoc} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js";
 
 
 var flagLogout = false;
@@ -12,7 +12,7 @@ window.onload = () =>  {
 function checkLogin(){
     auth.onAuthStateChanged((user) => {
         if(user){
-            // Modify "USER" with the name and surname of the user
+            // Display name and surname of the user
             document.querySelector('#username').innerHTML = user.displayName;
             // Do logout if clicking the logout button
             document.querySelector("#logout").onclick = () => {
@@ -75,7 +75,7 @@ async function setPage(uid_user){
     var table = document.querySelector('#table_movies');
     var container = document.querySelector('#container');
     var flag;
-    // check if the user's wishlist is not empty (if created and then removed all the movies???)
+    // check if the user's wishlist is not empty
     if(docSnap.exists()){
         // first check if the user already created a wishlist and then emptied it
         flag = false;

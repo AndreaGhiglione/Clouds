@@ -1,7 +1,6 @@
 import {auth, db, dbFirestore} from "./firebase.js";
-import {ref, onValue, set, get, child} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
-import {doc, updateDoc, deleteField, getDoc, setDoc, collection, addDoc, getDocs, query, where} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js";
-import {ref as sRef} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-storage.js";
+import {ref, set, get, child} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-database.js";
+import {doc, updateDoc, getDoc, setDoc} from "https://www.gstatic.com/firebasejs/9.6.3/firebase-firestore.js";
 
 var flagLogout = false;
 
@@ -12,7 +11,7 @@ window.onload = () =>  {
 function checkLogin(){
     auth.onAuthStateChanged((user) => {
         if(user){
-            // Modify "USER" with the name and surname of the user
+            // Display the name and surname of the user
             document.querySelector('#username').innerHTML = user.displayName;
             // Do logout if clicking the logout button
             document.querySelector("#logout").onclick = () => {
@@ -35,7 +34,7 @@ function checkLogin(){
 
 }
 
-// user's id, movie's data, row to hide
+// user's id, movie's data
 async function addToWishList(uid, data){
     // movie's fields
     var mid = data.id; 
@@ -75,8 +74,6 @@ async function addToWishList(uid, data){
 
 // display page
 function setPage(uid_user){
-    // User logged in
-    console.log(uid_user);
     // Read data in real-time db
     var realTimeDbRef = ref(db);
 
@@ -87,7 +84,6 @@ function setPage(uid_user){
             var table = document.querySelector('#table_movies');
             var container = document.querySelector('#container');
             var data = snapshot.val(); 
-            var rowCount = 0;
             for(let i in data){
                 // check if the movie is already in wishlist (in case, don't display it)
                 if(!data[i].inWishList){
@@ -99,8 +95,6 @@ function setPage(uid_user){
                     var currId = "button_table_" + i;
                     row.insertCell(3).innerHTML = '<button id=' + currId + ' class="heart">Add</button>';
                     document.querySelector('#' + currId).onclick = () => addToWishList(uid_user, data[i]);
-                    //document.querySelector('#' + currId).innerHTML = '<img src="heart.png" style="width:420px;height:420px;margin-top: -13px;margin-left: -18px; margin-bottom: -11px; />';
-                    rowCount++;
                 } 
             }
             document.querySelector("#msg_load").setAttribute("style","visibility:hidden");
@@ -108,7 +102,6 @@ function setPage(uid_user){
         }
         else {
             // First ever login for this user
-            // add node with uid in the database and append all movies from movies.json
             addNewUser(uid_user);
           }
         }).catch((error) => {
@@ -157,40 +150,4 @@ function addNewUser(uid_user){
             console.log("Error retrieving the movies list");
         }
     })
-    /*
-    fetch("./movies_small.json")
-    .then(response => {
-        return response.json();
-    })
-    .then(jsondata => {
-        var data = jsondata["movies-list"];
-        for(let i in data){
-            var genre = data[i].genre;
-            var id = data[i].id;
-            var title = data[i].title;
-            var year = data[i].year;
-            // add record to the db
-            set(ref(db, uid_user + "/" + id), {
-                "genre": genre,
-                "id": id,
-                "title": title,
-                "year": year,
-                "inWishList": false
-            })
-            // then, display all the movies
-            var table = document.querySelector('#table_movies');
-            var container = document.querySelector('#container');
-            var row = table.insertRow(-1);
-            row.insertCell(0).innerHTML = title;
-            row.insertCell(1).innerHTML = year;
-            row.insertCell(2).innerHTML = genre;
-            // add the button for wishlist
-            var currId = "button_table_" + i;
-            row.insertCell(3).innerHTML = '<button id=' + currId + ' class="heart">Add</button>';
-            document.querySelector('#' + currId).onclick = () => addToWishList(uid_user, data[i]);
-        }
-        document.querySelector("#msg_load").setAttribute("style","visibility:hidden");
-        container.setAttribute("style","visibility:visible;");
-    });
-    */
 }
