@@ -1,10 +1,21 @@
-import { signInWithGoogle } from "./firebase.js";
+import { auth, signInWithGoogle } from "./firebase.js";
 import { GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.3/firebase-auth.js";
 
 window.onload = () =>  {
+    checkLogin();
     const button_login = document.querySelector('#login_button');
 
     button_login.onclick = () => login();
+}
+
+function checkLogin(){
+    auth.onAuthStateChanged((user) => {
+        if(user){
+            console.log("You are already logged in, redirecting to movies dashboard");
+            window.location.href = "dashboard.html";
+        }
+    })
+
 }
 
 function login(){

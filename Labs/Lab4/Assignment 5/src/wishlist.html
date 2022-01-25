@@ -3,7 +3,7 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="dashboard.css">
         <link rel="icon" type="image/x-icon" href="favicon.png">
-        <script type="module" src="dashboard.js"></script>
+        <script type="module" src="wishlist.js"></script>
         <title>Movies Room</title>
     </head>
     <body> 
@@ -11,14 +11,15 @@
             <li style="float:left"><a id="home_button" href="dashboard.html">
                 <img id="logo" src="favicon.png" style="width:42px;height:42px;margin-top: -13px;margin-left: -18px; margin-bottom: -11px;"></a></li>
             <li><a id="logout" style="cursor:pointer;">Logout</a></li>
-            <li><a href="wishlist.html">
+            <li><a href="dashboard.html">
                 <img id="heart_nav" src="heart.png" style="width:42px;height:42px;margin-top: -13px;margin-left: -18px; margin-bottom: -11px;"></a></li>
             <li><a id="username"></a></li>
         </ul>
 
-        <div id="msg_load" style="visibility:visible;">
-            <h1>Loading movies...</h1>
+        <div id="msg" style="visibility:visible;">
+            <h1 id="msg_displayed">Loading movies...</h1>
         </div>
+
         <div id="container" style="visibility:hidden;">
             <input type="text" id="inputSearchBar" onkeyup="searchTable()" placeholder="Search">
 
@@ -27,7 +28,7 @@
                     <th>Title</th>
                     <th>Year</th>
                     <th>Genre</th>
-                    <th>Add to WishList</th>
+                    <th>Remove from WishList</th>
                 </tr>
             </table>
         </div>
